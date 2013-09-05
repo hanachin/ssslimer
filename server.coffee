@@ -16,6 +16,9 @@ console.log "PORT:#{+(phantom.args[0] || 3000)}"
 server.listen +(env.PORT || 3000), (req, res) ->
   query = parseQueryString(req.queryString)
 
+  console.log "request path: #{req.url}"
+  console.log "capture url:  #{query.url}"
+
   captureSetting = url: query.url, selector: query.selector
   uploadSetting  = AWSAccessKeyId: query.AWSAccessKeyId, key: query.key, acl: query.acl, signature: query.signature
 
