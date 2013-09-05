@@ -8,6 +8,7 @@
 CaptureService = require('capture-service').CaptureService
 UploadService  = require('upload-service').UploadService
 env = require('system').env
+fs  = require('fs')
 
 server = require('webserver').create()
 
@@ -22,7 +23,14 @@ server.listen +(env.PORT || 3000), (req, res) ->
   # return unless validateUploadSetting(uploadSetting)
 
   cs = new CaptureService(captureSetting)
-  cs.capture()
+  cs.capture ->
+    console.log "[capture]\tcapture callback start"
+    res.write fs.read(cs.filepath, 'b')
+    res.close()
+    console.log "[capture]\tcapture callback end"
+  res.setHeader 'Content-Type', 'image/jpeg'
+  res.setEncoding 'binary'
+  res._response.processAsync()
 
   # TODO: implement upload service
   # cs = new CaptureService(captureSetting)
