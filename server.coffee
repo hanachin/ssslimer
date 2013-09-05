@@ -7,10 +7,11 @@
 
 CaptureService = require('capture-service').CaptureService
 UploadService  = require('upload-service').UploadService
+env = require('system').env
 
 server = require('webserver').create()
 
-server.listen 3000, (req, res) ->
+server.listen +(env.PORT || 3000), (req, res) ->
   query = parseQueryString(req.queryString)
 
   captureSetting = url: query.url, selector: query.selector
