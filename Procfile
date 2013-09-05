@@ -1,1 +1,1 @@
-web: ./xvfb-run slimerjs-0.8.2/slimerjs server.coffee 2>&1
+web: ./xvfb-run slimerjs-0.8.2/slimerjs server.coffee $PORT 2>&1

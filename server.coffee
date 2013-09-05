@@ -12,7 +12,7 @@ fs  = require('fs')
 
 server = require('webserver').create()
 
-console.log "PORT:#{+(env.PORT || 3000)}"
+console.log "PORT:#{+(phantom.args[0] || 3000)}"
 server.listen +(env.PORT || 3000), (req, res) ->
   query = parseQueryString(req.queryString)
 
