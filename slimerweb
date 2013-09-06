@@ -1,0 +1,9 @@
+#!/bin/sh
+
+SCRIPT=$1
+PORT=$2
+
+export DISPLAY=:1
+bin/Xvfb :1 -screen 0 1440x900x24 -nolisten tcp -shmem &
+slimerjs-0.8.2/slimerjs $SCRIPT $PORT
+
