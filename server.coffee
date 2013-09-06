@@ -41,7 +41,8 @@ server.listen +(env.PORT || 3000), (req, res) ->
   res._response.processAsync()
 
 validateCaptureSetting = (s) -> !!s.url
-validateUploadSetting  = (s) -> s.AWSAccessKeyId && s.key && s.acl && s.signature && s.policy
+validateUploadSetting  = (s) ->
+  s.bucket_url && s.form?.AWSAccessKeyId && s.form?.key && s.form?.acl && s.form?.signature && s.form?.policy
 
 parseQueryString = (qs) ->
   return {} if qs is ''
