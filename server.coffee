@@ -26,22 +26,19 @@ server.listen +(env.PORT || 3000), (req, res) ->
 
   # TODO: move validation logic into upload service && capture service
   return unless validateCaptureSetting(captureSetting)
-  # return unless validateUploadSetting(uploadSetting)
+  return unless validateUploadSetting(uploadSetting)
 
   cs = new CaptureService(captureSetting)
+  us = new UploadService(uploadSetting)
   cs.capture ->
     console.log "[capture]\tcapture callback start"
     res.write fs.read(cs.filepath, 'b')
     res.close()
+    us.upload(cs.filepath, -> cs.remove())
     console.log "[capture]\tcapture callback end"
   res.setHeader 'Content-Type', 'image/jpeg'
   res.setEncoding 'binary'
   res._response.processAsync()
-
-  # TODO: implement upload service
-  # cs = new CaptureService(captureSetting)
-  # us = new UploadService(uploadSetting)
-  # cs.capture -> us.upload(cs.filepath, -> cs.remove())
 
 validateCaptureSetting = (s) -> !!s.url
 validateUploadSetting  = (s) -> s.AWSAccessKeyId && s.key && s.acl && s.signature && s.policy
