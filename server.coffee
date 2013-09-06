@@ -22,7 +22,14 @@ server.listen +(env.PORT || 3000), (req, res) ->
   console.log "capture url:  #{query.url}"
 
   captureSetting = url: query.url, selector: query.selector
-  uploadSetting  = AWSAccessKeyId: query.AWSAccessKeyId, key: query.key, acl: query.acl, signature: query.signature
+  uploadSetting  =
+    bucket_url: query.bucket_url
+    form:
+      AWSAccessKeyId: query.AWSAccessKeyId
+      key: query.key
+      policy: query.policy
+      signature: query.signature
+  console.log JSON.stringify uploadSetting
 
   # TODO: move validation logic into upload service && capture service
   return unless validateCaptureSetting(captureSetting)
@@ -42,7 +49,7 @@ server.listen +(env.PORT || 3000), (req, res) ->
 
 validateCaptureSetting = (s) -> !!s.url
 validateUploadSetting  = (s) ->
-  s.bucket_url && s.form?.AWSAccessKeyId && s.form?.key && s.form?.acl && s.form?.signature && s.form?.policy
+  s.bucket_url && s.form?.AWSAccessKeyId && s.form?.key && s.form?.policy && s.form?.signature && s.form?.policy
 
 parseQueryString = (qs) ->
   return {} if qs is ''
