@@ -7,7 +7,7 @@ CaptureService = ({@url, @selector}) ->
   @page = webpage.create()
   @page.viewportSize = @MACBOOK_AIR_VIEWPORT_SIZE
 
-  @filepath = "./tmp/capture/#{Math.random().toString(36)}"
+  @filepath = "/tmp/capture/#{Math.random().toString(36)}"
   @renderOptions =
     format:  'jpg'
     quality: 0.9
@@ -32,7 +32,6 @@ CaptureService::capture = (callback) ->
     @page.close()
 
     console.log "[capture]\turl: #{@url}\tselector: #{@selector}\tpath:#{@filepath} done"
-
     callback?()
 
 CaptureService::remove = ->
