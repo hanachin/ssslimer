@@ -29,7 +29,8 @@ server.listen +(env.PORT || 3000), (req, res) ->
       key: query.key
       policy: query.policy
       signature: query.signature
-  console.log JSON.stringify uploadSetting
+      acl: query.acl
+      success_action_redirect: query.success_action_redirect
 
   # TODO: move validation logic into upload service && capture service
   return unless validateCaptureSetting(captureSetting)
@@ -49,7 +50,7 @@ server.listen +(env.PORT || 3000), (req, res) ->
 
 validateCaptureSetting = (s) -> !!s.url
 validateUploadSetting  = (s) ->
-  s.bucket_url && s.form?.AWSAccessKeyId && s.form?.key && s.form?.policy && s.form?.signature && s.form?.policy
+  s.bucket_url && s.form?.AWSAccessKeyId && s.form?.key && s.form?.policy && s.form?.signature && s.form?.policy && s.form?.acl && s.form?.success_action_redirect
 
 parseQueryString = (qs) ->
   return {} if qs is ''
