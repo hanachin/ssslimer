@@ -1,1 +1,8 @@
 libdbus-glib-1-2
+dbus-x11
+xserver-xorg-core
+xfonts-100dpi
+xfonts-75dpi
+xfonts-scalable
+wfonts-cyrillic
+unzip
