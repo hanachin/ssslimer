@@ -12,7 +12,7 @@ fs  = require('fs')
 
 server = require('webserver').create()
 
-console.log "PORT:#{+(phantom.args[0] || 3000)}"
+console.log "PORT:#{+(env.PORT || 3000)}"
 for k, v of env
   console.log "#{k}: #{v}"
 server.listen +(env.PORT || 3000), (req, res) ->
