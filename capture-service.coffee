@@ -17,6 +17,8 @@ CaptureService = ({@url, @selector}) ->
 CaptureService::MACBOOK_AIR_VIEWPORT_SIZE = width: 1440, height: 900
 CaptureService::DEFAULT_CLIP_RECT         = width: 1440, height: 900, top: 0, left: 0
 
+CaptureService.validates = (s) -> !!s.url
+
 CaptureService::clipRect = ->
   if !!@selector
     @page.evaluate ((selector) -> document.querySelector(selector).getClientRects()[0]), @selector

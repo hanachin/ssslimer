@@ -31,8 +31,7 @@ server.listen +(env.PORT || 3000), (req, res) ->
       signature: query.signature
       acl: query.acl
 
-  # TODO: move validation logic into upload service && capture service
-  return unless validateCaptureSetting(captureSetting)
+  return unless CaptureService.validates(captureSetting)
   return unless UploadService.validates(uploadSetting)
 
   cs = new CaptureService(captureSetting)
@@ -46,8 +45,6 @@ server.listen +(env.PORT || 3000), (req, res) ->
   res.setHeader 'Content-Type', 'image/jpeg'
   res.setEncoding 'binary'
   res._response.processAsync()
-
-validateCaptureSetting = (s) -> !!s.url
 
 parseQueryString = (qs) ->
   return {} if qs is ''
