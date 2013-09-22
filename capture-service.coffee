@@ -28,7 +28,7 @@ CaptureService::clipRect = ->
 CaptureService::capture = (callback) ->
   console.log "[capture]\thtml: #{@html}\tselector: #{@selector}\tpath:#{@filepath}..."
 
-  @page.open("data:text/html;encoding=UTF-8,#{encodeURIComponent @html}").then =>
+  @page.open(@html).then =>
     @page.clipRect = @clipRect()
     @page.render(@filepath, @renderOptions)
     @page.close()
