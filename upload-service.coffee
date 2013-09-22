@@ -6,6 +6,15 @@ UploadService = (@setting) ->
   { @bucket_url, @form } = @setting
   console.log '[upload]\tinitialize done'
 
+UploadService.validates = (s) ->
+  s.bucket_url &&
+  s.form?.AWSAccessKeyId &&
+  s.form?.key &&
+  s.form?.policy &&
+  s.form?.signature &&
+  s.form?.policy &&
+  s.form?.acl
+
 UploadService::form_html = ->
  """
 <html>

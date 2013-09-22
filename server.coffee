@@ -33,7 +33,7 @@ server.listen +(env.PORT || 3000), (req, res) ->
 
   # TODO: move validation logic into upload service && capture service
   return unless validateCaptureSetting(captureSetting)
-  return unless validateUploadSetting(uploadSetting)
+  return unless UploadService.validates(uploadSetting)
 
   cs = new CaptureService(captureSetting)
   us = new UploadService(uploadSetting)
@@ -48,8 +48,6 @@ server.listen +(env.PORT || 3000), (req, res) ->
   res._response.processAsync()
 
 validateCaptureSetting = (s) -> !!s.url
-validateUploadSetting  = (s) ->
-  s.bucket_url && s.form?.AWSAccessKeyId && s.form?.key && s.form?.policy && s.form?.signature && s.form?.policy && s.form?.acl
 
 parseQueryString = (qs) ->
   return {} if qs is ''
