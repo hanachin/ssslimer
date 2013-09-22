@@ -1,7 +1,7 @@
 fs      = require('fs')
 webpage = require('webpage')
 
-CaptureService = ({@url, @selector}) ->
+CaptureService = ({@html, @selector}) ->
   console.log '[capture]\tinitialize...'
 
   @page = webpage.create()
@@ -17,7 +17,7 @@ CaptureService = ({@url, @selector}) ->
 CaptureService::MACBOOK_AIR_VIEWPORT_SIZE = width: 1440, height: 900
 CaptureService::DEFAULT_CLIP_RECT         = width: 1440, height: 900, top: 0, left: 0
 
-CaptureService.validates = (s) -> !!s.url
+CaptureService.validates = (s) -> !!s.html
 
 CaptureService::clipRect = ->
   if !!@selector
@@ -26,14 +26,14 @@ CaptureService::clipRect = ->
     @DEFAULT_CLIP_RECT
 
 CaptureService::capture = (callback) ->
-  console.log "[capture]\turl: #{@url}\tselector: #{@selector}\tpath:#{@filepath}..."
+  console.log "[capture]\thtml: #{@html}\tselector: #{@selector}\tpath:#{@filepath}..."
 
-  @page.open(@url).then =>
+  @page.open(@html).then =>
     @page.clipRect = @clipRect()
     @page.render(@filepath, @renderOptions)
     @page.close()
 
-    console.log "[capture]\turl: #{@url}\tselector: #{@selector}\tpath:#{@filepath} done"
+    console.log "[capture]\thtml: #{@html}\tselector: #{@selector}\tpath:#{@filepath} done"
     callback?()
 
 CaptureService::remove = ->

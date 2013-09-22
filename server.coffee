@@ -1,9 +1,6 @@
 # Params:
-# url:                encodeURIComponent('http://example.com/')
+# html:               encodeURIComponent('data:text/html;charset=UTF-8,<b>HelloWorld</b>')
 # selector(optional): encodeURIComponent('h1')
-#
-# example:
-# http://localhost:3000/?url=http%3A%2F%2Fexample.com%2F&selector=h1
 
 CaptureService = require('capture-service').CaptureService
 UploadService  = require('upload-service').UploadService
@@ -19,9 +16,10 @@ server.listen +(env.PORT || 3000), (req, res) ->
   query = parseQueryString(req.queryString)
 
   console.log "request path: #{req.url}"
-  console.log "capture url:  #{query.url}"
+  console.log "capture html: #{query.html}"
+  console.log "img selector: #{query.selector}"
 
-  captureSetting = url: query.url, selector: query.selector
+  captureSetting = html: query.html, selector: query.selector
   uploadSetting  =
     bucket_url: query.bucket_url
     form:
