@@ -1,1 +1,1 @@
-web: slimerweb server.coffee $PORT 2>&1
+web: slimerjs server.coffee 2>&1
