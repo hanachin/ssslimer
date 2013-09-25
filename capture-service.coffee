@@ -7,7 +7,7 @@ CaptureService = ({@url, @selector}) ->
   @page = webpage.create()
   @page.viewportSize = @MACBOOK_AIR_VIEWPORT_SIZE
 
-  @filepath = "./tmp/capture/#{Math.random().toString(36)}"
+  @filepath = "/tmp/capture/#{Math.random().toString(36)}"
   @renderOptions =
     format:  'jpg'
     quality: 0.9
@@ -16,6 +16,8 @@ CaptureService = ({@url, @selector}) ->
 
 CaptureService::MACBOOK_AIR_VIEWPORT_SIZE = width: 1440, height: 900
 CaptureService::DEFAULT_CLIP_RECT         = width: 1440, height: 900, top: 0, left: 0
+
+CaptureService.validates = (s) -> !!s.url
 
 CaptureService::clipRect = ->
   if !!@selector
@@ -32,7 +34,6 @@ CaptureService::capture = (callback) ->
     @page.close()
 
     console.log "[capture]\turl: #{@url}\tselector: #{@selector}\tpath:#{@filepath} done"
-
     callback?()
 
 CaptureService::remove = ->
