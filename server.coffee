@@ -42,7 +42,8 @@ server.listen +(env.PORT || 3000), (req, res) ->
 
   uploadError = ->
     console.log "[upload]\tupload error"
-    res.statusCode = 500
+    console.log "[upload]\tupload error"
+    res.writeHead(500, {})
     res.close()
     cs.remove()
 
@@ -52,7 +53,7 @@ server.listen +(env.PORT || 3000), (req, res) ->
 
   captureError = ->
     console.log "[capture]\tcapture error"
-    res.statusCode = 500
+    res.writeHead(500, {})
     res.close()
 
   cs.capture success: captureSuccess, error: captureError
