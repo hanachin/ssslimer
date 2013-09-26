@@ -34,7 +34,7 @@ server.listen +(env.PORT || 3000), (req, res) ->
 
   cs = new CaptureService(captureSetting)
   us = new UploadService(uploadSetting)
-  cs.capture ->
+  cs.capture success: ->
     console.log "[capture]\tcapture callback start"
     res.write fs.read(cs.filepath, 'b')
     res.close()

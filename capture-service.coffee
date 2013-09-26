@@ -25,16 +25,18 @@ CaptureService::clipRect = ->
   else
     @DEFAULT_CLIP_RECT
 
-CaptureService::capture = (callback) ->
+CaptureService::capture = ({success, error}) ->
   console.log "[capture]\turl: #{@url}\tselector: #{@selector}\tpath:#{@filepath}..."
 
-  @page.open(@url).then =>
+  @page.open(@url).then (status) =>
+    return error?() if status isnt "success"
+
     @page.clipRect = @clipRect()
     @page.render(@filepath, @renderOptions)
     @page.close()
 
     console.log "[capture]\turl: #{@url}\tselector: #{@selector}\tpath:#{@filepath} done"
-    callback?()
+    success?()
 
 CaptureService::remove = ->
   console.log "[capture]\tremove #{@filepath}..."
