@@ -34,14 +34,29 @@ server.listen +(env.PORT || 3000), (req, res) ->
 
   cs = new CaptureService(captureSetting)
   us = new UploadService(uploadSetting)
-  cs.capture success: ->
-    console.log "[capture]\tcapture callback start"
-    res.write fs.read(cs.filepath, 'b')
+
+  uploadSuccess = ->
+    console.log "[upload]\tupload success"
     res.close()
-    us.upload(cs.filepath, success: -> cs.remove())
-    console.log "[capture]\tcapture callback end"
-  res.setHeader 'Content-Type', 'image/jpeg'
-  res.setEncoding 'binary'
+    cs.remove()
+
+  uploadError = ->
+    console.log "[upload]\tupload error"
+    res.statusCode = 500
+    res.close()
+    cs.remove()
+
+  captureSuccess = ->
+    console.log "[capture]\tcapture success"
+    us.upload cs.filepath, success: uploadSuccess, error: uploadError
+
+  captureError = ->
+    console.log "[capture]\tcapture error"
+    res.statusCode = 500
+    res.close()
+
+  cs.capture success: captureSuccess, error: captureError
+
   res._response.processAsync()
 
 parseQueryString = (qs) ->
