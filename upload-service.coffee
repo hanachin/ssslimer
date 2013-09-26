@@ -40,7 +40,7 @@ UploadService::form_html = ->
 </html>
 """
 
-UploadService::upload = (filepath, callback) ->
+UploadService::upload = (filepath, {success, error}) ->
   console.log "[upload]\tUploading #{filepath}..."
   page = webpage.create()
   page.setContent @form_html(), 'http://example.com/'
@@ -48,9 +48,13 @@ UploadService::upload = (filepath, callback) ->
 
   bucket_url = @bucket_url
   page.onResourceReceived = ({url, status}) ->
-    if bucket_url == url && status == 204
+    return if bucket_url isnt url
+
+    if status is 204
       console.log "[upload]\tUploading #{filepath} done"
-      callback?()
+      success?()
+    else
+      error?()
 
   page.evaluate -> document.querySelector('#s3').submit()
 

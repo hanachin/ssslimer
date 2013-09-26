@@ -38,7 +38,7 @@ server.listen +(env.PORT || 3000), (req, res) ->
     console.log "[capture]\tcapture callback start"
     res.write fs.read(cs.filepath, 'b')
     res.close()
-    us.upload(cs.filepath, -> cs.remove())
+    us.upload(cs.filepath, success: -> cs.remove())
     console.log "[capture]\tcapture callback end"
   res.setHeader 'Content-Type', 'image/jpeg'
   res.setEncoding 'binary'
