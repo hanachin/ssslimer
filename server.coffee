@@ -12,8 +12,9 @@ fs  = require('fs')
 
 server = require('webserver').create()
 
-console.log "listen port: #{+(env.PORT || 3000)}"
-server.listen +(env.PORT || 3000), (req, res) ->
+port = +(env.PORT || 5000)
+console.log "listen port: #{port}"
+server.listen port, (req, res) ->
   query = parseQueryString(req.queryString)
 
   console.log "request path: #{req.url}"
