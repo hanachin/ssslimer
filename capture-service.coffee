@@ -10,7 +10,7 @@ CaptureService = ({@url, @selector}) ->
   @filepath = "/tmp/capture/#{Math.random().toString(36)}"
   @renderOptions =
     format:  'jpg'
-    quality: 0.9
+    quality: 0.95
 
   console.log '[capture]\tinitialize done'
 
